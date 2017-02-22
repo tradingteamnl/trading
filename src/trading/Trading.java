@@ -6,30 +6,11 @@
 package trading;
 
 //import
-import bittrex.BittrexMarketRequest;
-import global.FileSystem;
 
 /**
  *
  * @author michel
  */
 public class Trading {
-
-    //maak objecten aan
-    BittrexMarketRequest r = new BittrexMarketRequest();
-    FileSystem filesystem = new FileSystem();
     
-    /**
-     * @param args the command line arguments
-     */
-   
-    public static void main(String[] args) {
-        //maak objecten aan
-        BittrexMarketRequest r = new BittrexMarketRequest();
-        FileSystem filesystem = new FileSystem();
-        
-        //run code
-        filesystem.folderExist();
-        r.bittrexmarketrequest();
-    }
 }
