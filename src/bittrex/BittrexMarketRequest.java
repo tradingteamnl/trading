@@ -63,7 +63,6 @@ public class BittrexMarketRequest {
                     
                     //query
                     String query = "SELECT COUNT(*) AS total FROM marktdata WHERE Handelsplaats = 'bittrex' AND Markt='"+markt+"'";
-                    System.out.println(query);
                     ResultSet rs1 = stmt.executeQuery(query);
                     int count = 0;
                     while (rs1.next()) {
@@ -76,7 +75,6 @@ public class BittrexMarketRequest {
                             +"', '"+last+"')";
 
                         //voer sql uit
-                        System.out.println(sql);
                         stmt.execute(sql);
                     } else {
                         String sql = "UPDATE marktdata SET High='"+high+"', Low='"+low+"',  Volume='"+volume+"',"
