@@ -6,6 +6,7 @@
 package global;
 
 import userinterface.Home;
+import mysql.MysqlError;
 /**
  *
  * @author michel
@@ -17,6 +18,12 @@ public class starter{
         //maak objecten aan
         Drivers drivers = new Drivers();
         Home home = new Home();
+        FileSystem filesystem = new FileSystem();
+        MysqlError mysqlerror = new MysqlError();
+        
+        
+        //kijk of folder bestaat
+        filesystem.folderExist();
         
         Thread thread = new Thread("Back software is start.") {
             public void run(){
@@ -27,6 +34,9 @@ public class starter{
 
         thread.start();
         
+        String sql = "lol";
+        String message = "lol";
+        mysqlerror.mysqlError(sql, message);
         
         Home.main(args);
     }

@@ -23,15 +23,16 @@ public class FileSystem {
     //maakt objecten aan
     JFileChooser fr = new JFileChooser();
     
-    
-    
+    private String fileLocation(){
+        FileSystemView fw = fr.getFileSystemView();
+        return Paths.get(fw.getDefaultDirectory() + "//Documents//trading").toString()+"//";
+    }
     
     
     public void folderExist (){
         
         FileSystemView fw = fr.getFileSystemView();
         Path test = Paths.get(fw.getDefaultDirectory() + "/Documents/trading");
-        System.out.println(fw.getDefaultDirectory() + "/Documents//trading");
         //kijk of de folder bestaat
         if(!Files.exists(test)){
             System.out.println("No Folder");
@@ -47,7 +48,31 @@ public class FileSystem {
     
     public String saveFile (String fileName, String FileData){
         try{
-            PrintWriter writer = new PrintWriter(fileName+".txt", "UTF-8");
+            
+            if ("know".equals(fileName)){            
+                try (PrintWriter writer = new PrintWriter(fileLocation()+countFileDirectory()+".txt", "UTF-8")) {
+                    writer.println(FileData);
+                }
+            } else {
+                try (PrintWriter writer = new PrintWriter(fileLocation()+fileName, "UTF-8")) {
+                    writer.println(FileData);
+                }
+            }
+            return "true";
+        } catch (IOException e) {
+           return "false";
+        }
+    }
+    
+    /**
+     * Deze methode zorgt er voor dat niet succesvol uitgevoerd query worden opgeslagen.
+     * @param fileName
+     * @param FileData
+     * @return of het gelukt is ja of nee
+     */
+    public String saveFileSQL (String fileName, String FileData){
+        try{
+            PrintWriter writer = new PrintWriter(fileLocation()+"sqlfile.sql", "UTF-8");
             writer.println(FileData);
             writer.close();
             return "true";
@@ -56,6 +81,11 @@ public class FileSystem {
         }
     }
     
+    /**
+     * Leest bestanden in
+     * @param file
+     * @return 
+     */
     public String readFile (String file){
         try {
             FileSystemView fw = fr.getFileSystemView();
@@ -65,7 +95,20 @@ public class FileSystem {
         }
     }
     
+    /**
+     * Leest de config
+     * @return 
+     */
     public String readConfig (){
         return readFile("config.json");
+    }
+    
+    /**
+     * Teld hoeveel bestanden er in de map zijn.
+     * @return
+     * @throws IOException 
+     */
+    private int countFileDirectory() throws IOException{
+        return (int) Files.list(Paths.get(fileLocation())).count();
     }
 }
