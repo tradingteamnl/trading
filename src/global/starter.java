@@ -5,31 +5,27 @@
  */
 package global;
 
-import ui.Home;
+import userinterface.Home;
 /**
  *
  * @author michel
  */
 public class starter{
+    
     public static void main(String[] args) {
         
         //maak objecten aan
         Drivers drivers = new Drivers();
         Home home = new Home();
         
-        //start een nieuw Thread zodat alle background code blijven draaien
-        Thread t = new Thread(() -> {
-            while(!Thread.currentThread().isInterrupted()){
+        Thread thread = new Thread("Back software is start.") {
+            public void run(){
                 drivers.main();
-                
-                try{
-                    Thread.sleep(1200000000);
-                }catch(InterruptedException e){
-                    Thread.currentThread().interrupt();
-                }
+                System.out.println("run by: " + getName());
             }
-        });
-        t.start();
+        };
+
+        thread.start();
         
         
         Home.main(args);
