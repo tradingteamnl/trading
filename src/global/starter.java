@@ -36,7 +36,7 @@ public class starter{
         
         String sql = "lol";
         String message = "lol";
-        mysqlerror.mysqlError(sql, message);
+        mysqlerror.mysqlError(sql, message, "*");
         
         Home.main(args);
     }
