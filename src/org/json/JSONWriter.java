@@ -56,7 +56,7 @@ SOFTWARE.
  * @version 2016-08-08
  */
 public class JSONWriter {
-    private static final int maxdepth = 200;
+    private static final int maxdepth = 20000;
 
     /**
      * The comma flag determines if a comma should be output before the next
