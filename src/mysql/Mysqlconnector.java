@@ -30,7 +30,11 @@ public class Mysqlconnector {
         return "jdbc:mysql://"+IPADDRESS+":"+POORT+"/"+DATABASENAAM+"?autoReconnect="+AUTORECONNECT+"&useSSL="+SSL;
     };
 
-
+    public String getDATABASENAAM() {
+        return DATABASENAAM;
+    }
+    
+    //mogelijk om te connecten met een externe database
     private final String USENAMESECONDE = "root";
     private final String PASSWORDSECONDE = "Pulsar11";
     private final String IPADDRESSSECONDE = "25.100.87.213";
@@ -46,6 +50,12 @@ public class Mysqlconnector {
     public String getPasswordSeconde(){
         return PASSWORDSECONDE;
     };
+
+    public String getDATABASENAAMSECONDE() {
+        return DATABASENAAMSECONDE;
+    }
+    
+    
     
     public String getUrlmysqlSeconde(){
         return "jdbc:mysql://"+IPADDRESSSECONDE+":"+POORTSECONDE+"/"+DATABASENAAMSECONDE+"?autoReconnect="+AUTORECONNECTSECONDE+"&useSSL="+SSLSECONDE;
