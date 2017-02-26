@@ -22,23 +22,31 @@ public class FileSystem {
     
     //maakt objecten aan
     JFileChooser fr = new JFileChooser();
+    GetOsPlatfrom getosplatform = new GetOsPlatfrom();
     
     private String fileLocation(){
         FileSystemView fw = fr.getFileSystemView();
+        
+        if("windows".equals(getosplatform.getOS())){
+            return Paths.get(fw.getDefaultDirectory() + "\\Documents\\trading").toString()+"\\";
+        }
+        
+        if("mac".equals(getosplatform.getOS())){
+            return Paths.get(fw.getDefaultDirectory() + "//Documents//trading").toString()+"//";
+        }
+        
         return Paths.get(fw.getDefaultDirectory() + "//Documents//trading").toString()+"//";
     }
     
     
     public void folderExist (){
         
-        FileSystemView fw = fr.getFileSystemView();
-        Path test = Paths.get(fw.getDefaultDirectory() + "/Documents/trading");
         //kijk of de folder bestaat
-        if(!Files.exists(test)){
+        if(!Files.exists(Paths.get(fileLocation()))){
             System.out.println("No Folder");
             
             //folder word aangemaakt.
-            File file = new File(fw.getDefaultDirectory() + "/Documents/trading");
+            File file = new File(fileLocation());
             file.mkdir();
             System.out.println("Folder created");
          } else {
@@ -89,7 +97,7 @@ public class FileSystem {
     public String readFile (String file){
         try {
             FileSystemView fw = fr.getFileSystemView();
-            return new String(Files.readAllBytes(Paths.get(fw.getDefaultDirectory() + "/Documents/trading/"+file)));
+            return new String(Files.readAllBytes(Paths.get(fileLocation()+file)));
         } catch (IOException ex) {
             return "false";
         }
