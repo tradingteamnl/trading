@@ -28,7 +28,7 @@ public class FileSystem {
         FileSystemView fw = fr.getFileSystemView();
         
         if("windows".equals(getosplatform.getOS())){
-            return Paths.get(fw.getDefaultDirectory() + "\\Documents\\trading").toString()+"\\";
+            return Paths.get("C:\\trading").toString()+"\\";
         }
         
         if("mac".equals(getosplatform.getOS())){
