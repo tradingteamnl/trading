@@ -5,11 +5,21 @@
  */
 package global;
 
+import bittrex.BittrexMarketRequest;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+import trading.BerekenGemiddelde;
+
 /**
  *
  * @author michel
  */
 public class Drivers {
+    
+    BittrexMarketRequest r = new BittrexMarketRequest();
+    BerekenGemiddelde berekengemiddelde = new BerekenGemiddelde();
+    
     public void main(){
         
         
@@ -19,6 +29,20 @@ public class Drivers {
         //run code
         filesystem.folderExist();
         //r.bittrexmarketrequest();
+        
+        TimerTask task = new TimerTask() {
+
+            @Override
+            public void run() {
+                r.bittrexmarketrequest();
+                berekengemiddelde.forLoop();
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(task, new Date(), 60000);
+        
+        
         System.out.println("fafafasd");
     }
 }
