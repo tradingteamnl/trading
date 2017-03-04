@@ -6,6 +6,7 @@
 package bittrex;
 
 //import
+import global.DatumCheck;
 import global.Time;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -24,11 +25,13 @@ public class BittrexMarketRequest {
     
     HttpRequest httprequest = new HttpRequest();
     Time time = new Time();
+    DatumCheck datumcheck = new DatumCheck();
     Mysqlconnector mysqlconnector = new Mysqlconnector();
     
     private final String USERNAME = mysqlconnector.getUsername();
     private final String PASSWORD = mysqlconnector.getPassword();
     private final String CONN_STRING = mysqlconnector.getUrlmysql();
+    private int datumIddatum;
     
     public void bittrexmarketrequest (){
         
@@ -38,13 +41,14 @@ public class BittrexMarketRequest {
             Statement stmt = (Statement) conn.createStatement();
             String uri = "https://bittrex.com/api/v1.1/public/getmarketsummaries";
             
+            //vul datum id in 
+           this.datumIddatum = datumcheck.datumCheck();
+            
             /**
              * Vraag dat op en kijkt of het antwoord false is
              */
             String data = httprequest.GetHttp(uri);
-            
             if(!"false".equals(data)){
-                
                 //maak een json object
                 JSONObject obj = new JSONObject(data);
                 
@@ -83,6 +87,13 @@ public class BittrexMarketRequest {
                         stmt.execute(sql);
                     }
                     
+                    //insert string
+                    String sql = "INSERT INTO bittrexmarktdata (Handelsplaats, Markt, High, Low, Volume, VolumeBTC, Bid, Ask, Last, Datum, Tijd)"
+                            +"VALUES('bittrex', '"+markt+"', '"+high+"', '"+low+"', '"+volume+"', '"+volumeBTC+"', '"+bid+"', '"+ask
+                            +"', '"+last+"', '"+datumIddatum+"', '"+time.getTimeStamp()+"')";
+                    //System.out.println(sql);
+                    //voer sql uit
+                    stmt.execute(sql);
                 }
             }
         }catch (Exception ex) {
