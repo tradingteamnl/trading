@@ -18,6 +18,8 @@ import Security.EncryptionUtility;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import global.FileSystem;
+import org.json.JSONObject;
 
 public class BittrexProtocall {
 
@@ -26,13 +28,22 @@ public class BittrexProtocall {
     private final String API_VERSION = "1.1", INITIAL_URL = "https://bittrex.com/api/";
     private final String PUBLIC = "public", MARKET = "market", ACCOUNT = "account";
     private final String encryptionAlgorithm = "HmacSHA512";
+    private JSONObject bittrexConfig;
     private String apikey;
     private String secret;
-
-    public BittrexProtocall(String apikey, String secret) {
-
-        this.apikey = apikey;
-        this.secret = secret;
+    
+    //maak object
+    FileSystem filesystem = new FileSystem();
+    
+    /**
+     * Constructiir
+     * @param apikey
+     * @param secret 
+     */
+    public BittrexProtocall() {
+        this.bittrexConfig = new JSONObject(filesystem.readFile("config.json")).getJSONObject("bittrex");
+        this.apikey = bittrexConfig.getString("apikey");
+        this.secret = bittrexConfig.getString("apisecretkey");
     }
 
     public void setAuthKeysFromTextFile(String textFile) { // Add the text file containing the key & secret in the same path as the source code
